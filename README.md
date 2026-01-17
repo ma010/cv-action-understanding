@@ -22,6 +22,37 @@ Lightweight notebook lab for human action recognition (HAR) experiments.
 - Jupyter notebooks tracking incremental changes from an open-source baseline.
 - `NOTEBOOK_EXPERIMENTS_SUMMARY.md` for a side-by-side experiment summary.
 
+## Notebook workflow (major steps)
+Each notebook follows the same end-to-end flow, with later versions optimizing parts of the pipeline:
+
+1. **Data discovery & labeling**
+   - Read the dataset folders/files and build a table of image paths + labels.
+   - Map class names to numeric labels (one-hot in the baseline, integer labels in enhanced versions).
+2. **Train/validation split**
+   - Baseline: trains on all data with no validation split.
+   - Enhanced versions: stratified train/validation split to measure generalization.
+3. **Input pipeline**
+   - Baseline: load all images into RAM with PIL, then convert to NumPy arrays.
+   - Enhanced versions: stream with `tf.data` (`read_file` → `decode_jpeg` → `resize`) and use `map`/`prefetch` for throughput.
+4. **Augmentation & preprocessing**
+   - Baseline: no augmentation.
+   - Enhanced versions: random flips/rotations/zoom/contrast plus EfficientNet preprocessing.
+5. **Model definition**
+   - All versions use EfficientNetB7 as the backbone.
+   - Baseline head: `Flatten → Dense(512) → Dense(num_classes)`.
+   - Enhanced head: `GlobalAveragePooling2D → Dropout → Dense(num_classes)` (lighter/faster).
+6. **Training configuration**
+   - Optimizer: Adam (all versions).
+   - Loss: categorical cross-entropy (baseline) vs sparse categorical cross-entropy (enhanced).
+   - Metrics: accuracy plus optional top‑3 accuracy in enhanced versions.
+   - Callbacks: early stopping + checkpointing in enhanced versions.
+7. **Acceleration options**
+   - Enhanced versions add multi‑GPU (`MirroredStrategy`).
+   - Version 4 adds mixed precision with float32 output logits.
+8. **Evaluation & inference**
+   - Report training/validation metrics.
+   - Run sample predictions and map numeric outputs back to class names.
+
 ## Attribution
 The original notebook is sourced from Kaggle: https://www.kaggle.com/code/kirollosashraf/human-action-recognition-har
 
