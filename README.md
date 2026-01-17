@@ -10,6 +10,14 @@ Lightweight notebook lab for human action recognition (HAR) experiments.
 ## Highlights
 - Summary table: see `NOTEBOOK_EXPERIMENTS_SUMMARY.md#overview`.
 
+| Notebook | Runtime | GPU | Major changes |
+| --- | --- | --- | --- |
+| original-har-2024-36min-GPU-P100.ipynb | 36 min | 1× P100 | Baseline: in‑memory NumPy load, one‑hot labels, EfficientNetB7 + Flatten + Dense(512), no val split/augmentation |
+| version1-har-20260117-36min-GPU-P100.ipynb | 36 min | 1× P100 | Exploratory cells only; training pipeline unchanged |
+| version2-har-enhancement-20260111-28min-GPU-2T4s.ipynb | 28 min | 2× T4 | tf.data pipeline + stratified split, augmentation + preprocess, GAP head, sparse loss, callbacks, multi‑GPU |
+| verion3-har-enhancement-20260111-22min-GPU-P100.ipynb | 22 min | 1× P100 | Same enhancements as v2 on single P100 |
+| version4-har-enhancement-20260111-21min-GPU-2T4s.ipynb | 21 min | 2× T4 | v2 enhancements + mixed precision (float16 policy, float32 output) |
+
 ## What’s here
 - Jupyter notebooks tracking incremental changes from an open-source baseline.
 - `NOTEBOOK_EXPERIMENTS_SUMMARY.md` for a side-by-side experiment summary.
