@@ -11,6 +11,9 @@ Lightweight notebook lab for human action recognition (HAR) experiments.
 - Jupyter notebooks tracking incremental changes from an open-source baseline.
 - `NOTEBOOK_EXPERIMENTS_SUMMARY.md` for a side-by-side experiment summary.
 
+## Attribution
+The original notebook is sourced from Kaggle: https://www.kaggle.com/code/kirollosashraf/human-action-recognition-har
+
 ## Data expectations
 The notebooks currently read data from the Kaggle-style path:
 
