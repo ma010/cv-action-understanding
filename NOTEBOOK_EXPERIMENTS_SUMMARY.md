@@ -5,13 +5,13 @@ This summary compares the original notebook with subsequent variants. Each varia
 
 Note: HAR = Human Action Recognition.
 
-| Notebook | Runtime | GPU | Major changes |
-| --- | --- | --- | --- |
-| original-har-2024-36min-GPU-P100.ipynb | 36 min | 1× P100 | Baseline: in‑memory NumPy load, one‑hot labels, EfficientNetB7 + Flatten + Dense(512), no val split/augmentation |
-| version1-har-20260117-36min-GPU-P100.ipynb | 36 min | 1× P100 | Exploratory cells only; training pipeline unchanged |
-| version2-har-enhancement-20260111-28min-GPU-2T4s.ipynb | 28 min | 2× T4 | tf.data pipeline + stratified split, augmentation + preprocess, GAP head, sparse loss, callbacks, multi‑GPU |
-| verion3-har-enhancement-20260111-22min-GPU-P100.ipynb | 22 min | 1× P100 | Same enhancements as v2 on single P100 |
-| version4-har-enhancement-20260111-21min-GPU-2T4s.ipynb | 21 min | 2× T4 | v2 enhancements + mixed precision (float16 policy, float32 output) |
+| Notebook | Runtime | GPU | Major changes | Runtime variation (why) |
+| --- | --- | --- | --- | --- |
+| original-har-2024-36min-GPU-P100.ipynb | 36 min | 1× P100 | Baseline: in‑memory NumPy load, one‑hot labels, EfficientNetB7 + Flatten + Dense(512), no val split/augmentation | Slower: eager Python/PIL load + no `tf.data` pipeline; larger head; single GPU |
+| version1-har-20260117-36min-GPU-P100.ipynb | 36 min | 1× P100 | Exploratory cells only; training pipeline unchanged | Same as baseline: only adds diagnostics |
+| version2-har-enhancement-20260111-28min-GPU-2T4s.ipynb | 28 min | 2× T4 | `tf.data` pipeline + stratified split, augmentation + preprocess, GAP head, sparse loss, callbacks, multi‑GPU | Faster: `tf.data` + smaller head + 2× GPU; augmentation adds work but input pipeline parallelism helps |
+| verion3-har-enhancement-20260111-22min-GPU-P100.ipynb | 22 min | 1× P100 | Same enhancements as v2 on single P100 | Faster than baseline: `tf.data` + smaller head; P100 strong single‑GPU throughput |
+| version4-har-enhancement-20260111-21min-GPU-2T4s.ipynb | 21 min | 2× T4 | v2 enhancements + mixed precision (float16 policy, float32 output) | Fastest: mixed precision + 2× GPU + `tf.data` pipeline |
 
 ## Baseline (Original)
 **File:** `original-har-2024-36min-GPU-P100.ipynb`  
