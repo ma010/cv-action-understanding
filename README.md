@@ -7,6 +7,9 @@ Lightweight notebook lab for human action recognition (HAR) experiments.
 - HAR = Human Action Recognition.
 - Notebook filenames encode date, runtime, and GPU used (e.g., `...-21min-GPU-2T4s`).
 
+## Highlights
+- Summary table: see `NOTEBOOK_EXPERIMENTS_SUMMARY.md#overview`.
+
 ## What’s here
 - Jupyter notebooks tracking incremental changes from an open-source baseline.
 - `NOTEBOOK_EXPERIMENTS_SUMMARY.md` for a side-by-side experiment summary.
